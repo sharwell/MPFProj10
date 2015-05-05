@@ -16,13 +16,13 @@ using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 using System.Runtime.InteropServices;
+using System.Windows;
 using EnvDTE;
-using Microsoft.VisualStudio;
+using Microsoft.VisualStudio.Project.Automation;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Microsoft.VSSDK.Tools.VsIdeTesting;
-using Microsoft.VisualStudio.Project.Automation;
+using Microsoft.VisualStudioTools.VSTestHost;
 using MSBuild = Microsoft.Build.Evaluation;
 
 namespace Microsoft.VisualStudio.Project.IntegrationTests
@@ -44,15 +44,13 @@ namespace Microsoft.VisualStudio.Project.IntegrationTests
 		/// Add new file to the nestedProject
 		/// </summary>
 		[TestMethod()]
-		[TestProperty(VsIdeTestHostContants.TestPropertyName.RegistryHiveName, RegistryHiveName)]
-		[TestProperty(VsIdeTestHostContants.TestPropertyName.RestartOptions, VsIdeTestHostContants.HostRestartOptions.Both)]
-		[HostType("VS IDE")]
+		[HostType("VSTestHost")]
 		public void TestProjectCreationWithDTE()
 		{
-			UIThreadInvoker.Invoke((ThreadInvoker)delegate()
+			Application.Current.Dispatcher.Invoke(delegate()
 			{
 				//Get the global service provider and the dte
-				IServiceProvider sp = VsIdeTestHostContext.ServiceProvider;
+				IServiceProvider sp = VSTestContext.ServiceProvider;
 				DTE dte = (DTE)sp.GetService(typeof(DTE));
 
 				string destination = Path.Combine(TestContext.TestDir, TestContext.TestName);
@@ -99,15 +97,13 @@ namespace Microsoft.VisualStudio.Project.IntegrationTests
 		/// Verify the created project
 		/// </summary>
 		[TestMethod()]
-		[TestProperty(VsIdeTestHostContants.TestPropertyName.RegistryHiveName, RegistryHiveName)]
-		[TestProperty(VsIdeTestHostContants.TestPropertyName.RestartOptions, VsIdeTestHostContants.HostRestartOptions.Both)]
-		[HostType("VS IDE")]
+		[HostType("VSTestHost")]
 		public void TestProjectCreationInSolutionExplorer()
 		{
-			UIThreadInvoker.Invoke((ThreadInvoker)delegate()
+			Application.Current.Dispatcher.Invoke(delegate()
 			{
 				//Get the global service provider and the dte
-				IServiceProvider sp = VsIdeTestHostContext.ServiceProvider;
+				IServiceProvider sp = VSTestContext.ServiceProvider;
 				DTE dte = (DTE)sp.GetService(typeof(DTE));
 
 				try
@@ -126,15 +122,13 @@ namespace Microsoft.VisualStudio.Project.IntegrationTests
 		/// Create project and check if the hasProjectOpened flag is set.
 		/// </summary>
 		[TestMethod()]
-		[TestProperty(VsIdeTestHostContants.TestPropertyName.RegistryHiveName, RegistryHiveName)]
-		[TestProperty(VsIdeTestHostContants.TestPropertyName.RestartOptions, VsIdeTestHostContants.HostRestartOptions.Both)]
-		[HostType("VS IDE")]
+		[HostType("VSTestHost")]
 		public void TestHasProjectOpened()
 		{
-			UIThreadInvoker.Invoke((ThreadInvoker)delegate()
+			Application.Current.Dispatcher.Invoke(delegate()
 			{
 				//Get the global service provider and the dte
-				IServiceProvider sp = VsIdeTestHostContext.ServiceProvider;
+				IServiceProvider sp = VSTestContext.ServiceProvider;
 				DTE dte = (DTE)sp.GetService(typeof(DTE));
 
 				string destination = Path.Combine(TestContext.TestDir, TestContext.TestName);
@@ -151,15 +145,13 @@ namespace Microsoft.VisualStudio.Project.IntegrationTests
 		/// Verify the object
 		/// </summary>
 		[TestMethod()]
-		[TestProperty(VsIdeTestHostContants.TestPropertyName.RegistryHiveName, RegistryHiveName)]
-		[TestProperty(VsIdeTestHostContants.TestPropertyName.RestartOptions, VsIdeTestHostContants.HostRestartOptions.Both)]
-		[HostType("VS IDE")]
+		[HostType("VSTestHost")]
 		public void TestGetAutomationObject()
 		{
-			UIThreadInvoker.Invoke((ThreadInvoker)delegate()
+			Application.Current.Dispatcher.Invoke(delegate()
 			{
 				//Get the global service provider and the dte
-				IServiceProvider sp = VsIdeTestHostContext.ServiceProvider;
+				IServiceProvider sp = VSTestContext.ServiceProvider;
 				DTE dte = (DTE)sp.GetService(typeof(DTE));
 
 				string destination = Path.Combine(TestContext.TestDir, TestContext.TestName);
@@ -172,15 +164,13 @@ namespace Microsoft.VisualStudio.Project.IntegrationTests
 		}
 
 		[TestMethod()]
-		[TestProperty(VsIdeTestHostContants.TestPropertyName.RegistryHiveName, RegistryHiveName)]
-		[TestProperty(VsIdeTestHostContants.TestPropertyName.RestartOptions, VsIdeTestHostContants.HostRestartOptions.Both)]
-		[HostType("VS IDE")]
+		[HostType("VSTestHost")]
 		public void TestAddChild()
 		{
-			UIThreadInvoker.Invoke((ThreadInvoker)delegate()
+			Application.Current.Dispatcher.Invoke(delegate()
 			{
 				//Get the global service provider and the dte
-				IServiceProvider sp = VsIdeTestHostContext.ServiceProvider;
+				IServiceProvider sp = VSTestContext.ServiceProvider;
 				DTE dte = (DTE)sp.GetService(typeof(DTE));
 
 				string destination = Path.Combine(TestContext.TestDir, TestContext.TestName);
@@ -198,15 +188,13 @@ namespace Microsoft.VisualStudio.Project.IntegrationTests
 		}
 
 		[TestMethod()]
-		[TestProperty(VsIdeTestHostContants.TestPropertyName.RegistryHiveName, RegistryHiveName)]
-		[TestProperty(VsIdeTestHostContants.TestPropertyName.RestartOptions, VsIdeTestHostContants.HostRestartOptions.Both)]
-		[HostType("VS IDE")]
+		[HostType("VSTestHost")]
 		public void TestBuild()
 		{
-			UIThreadInvoker.Invoke((ThreadInvoker)delegate()
+			Application.Current.Dispatcher.Invoke(delegate()
 			{
 				//Get the global service provider and the dte
-				IServiceProvider sp = VsIdeTestHostContext.ServiceProvider;
+				IServiceProvider sp = VSTestContext.ServiceProvider;
 				DTE dte = (DTE)sp.GetService(typeof(DTE));
 
 				string destination = Path.Combine(TestContext.TestDir, TestContext.TestName);
@@ -217,15 +205,13 @@ namespace Microsoft.VisualStudio.Project.IntegrationTests
 		}
 
 		[TestMethod]
-		[TestProperty(VsIdeTestHostContants.TestPropertyName.RegistryHiveName, RegistryHiveName)]
-		[TestProperty(VsIdeTestHostContants.TestPropertyName.RestartOptions, VsIdeTestHostContants.HostRestartOptions.Both)]
-		[HostType("VS IDE")]
+		[HostType("VSTestHost")]
 		public void TestDesignTimeAssemblyResolution()
 		{
-			UIThreadInvoker.Invoke((ThreadInvoker)delegate()
+			Application.Current.Dispatcher.Invoke(delegate()
 			{
 				//Get the global service provider and the dte
-				IServiceProvider sp = VsIdeTestHostContext.ServiceProvider;
+				IServiceProvider sp = VSTestContext.ServiceProvider;
 				DTE dte = (DTE)sp.GetService(typeof(DTE));
 
 				string destination = Path.Combine(TestContext.TestDir, TestContext.TestName);
@@ -245,15 +231,13 @@ namespace Microsoft.VisualStudio.Project.IntegrationTests
 		}
 
 		[TestMethod()]
-		[TestProperty(VsIdeTestHostContants.TestPropertyName.RegistryHiveName, RegistryHiveName)]
-		[TestProperty(VsIdeTestHostContants.TestPropertyName.RestartOptions, VsIdeTestHostContants.HostRestartOptions.Both)]
-		[HostType("VS IDE")]
+		[HostType("VSTestHost")]
 		public void TestDeletingAProjectItem()
 		{
-			UIThreadInvoker.Invoke((ThreadInvoker)delegate()
+			Application.Current.Dispatcher.Invoke(delegate()
 			{
 				//Get the global service provider and the dte
-				IServiceProvider sp = VsIdeTestHostContext.ServiceProvider;
+				IServiceProvider sp = VSTestContext.ServiceProvider;
 				DTE dte = (DTE)sp.GetService(typeof(DTE));
 
 				string destination = Path.Combine(TestContext.TestDir, TestContext.TestName);
@@ -283,15 +267,13 @@ namespace Microsoft.VisualStudio.Project.IntegrationTests
 		/// Tests default action on a FileNode.
 		/// </summary>
 		[TestMethod()]
-		[TestProperty(VsIdeTestHostContants.TestPropertyName.RegistryHiveName, RegistryHiveName)]
-		[TestProperty(VsIdeTestHostContants.TestPropertyName.RestartOptions, VsIdeTestHostContants.HostRestartOptions.Both)]
-		[HostType("VS IDE")]
+		[HostType("VSTestHost")]
 		public void TestDoDefaultActionOnFileNode()
 		{
-			UIThreadInvoker.Invoke((ThreadInvoker)delegate()
+			Application.Current.Dispatcher.Invoke(delegate()
 			{
 				//Get the global service provider and the dte
-				IServiceProvider sp = VsIdeTestHostContext.ServiceProvider;
+				IServiceProvider sp = VSTestContext.ServiceProvider;
 				DTE dte = (DTE)sp.GetService(typeof(DTE));
 
 				string destination = Path.Combine(TestContext.TestDir, TestContext.TestName);
@@ -338,15 +320,13 @@ namespace Microsoft.VisualStudio.Project.IntegrationTests
 		}
 
 		[TestMethod()]
-		[TestProperty(VsIdeTestHostContants.TestPropertyName.RegistryHiveName, RegistryHiveName)]
-		[TestProperty(VsIdeTestHostContants.TestPropertyName.RestartOptions, VsIdeTestHostContants.HostRestartOptions.Both)]
-		[HostType("VS IDE")]
+		[HostType("VSTestHost")]
 		public void TestSaveAsOnProjectFile()
 		{
-			UIThreadInvoker.Invoke((ThreadInvoker)delegate()
+			Application.Current.Dispatcher.Invoke(delegate()
 			{
 				//Get the global service provider and the dte
-				IServiceProvider sp = VsIdeTestHostContext.ServiceProvider;
+				IServiceProvider sp = VSTestContext.ServiceProvider;
 				DTE dte = (DTE)sp.GetService(typeof(DTE));
 
 				string destination = Path.Combine(TestContext.TestDir, TestContext.TestName);
@@ -380,15 +360,13 @@ namespace Microsoft.VisualStudio.Project.IntegrationTests
 		}
 
 		[TestMethod()]
-		[TestProperty(VsIdeTestHostContants.TestPropertyName.RegistryHiveName, RegistryHiveName)]
-		[TestProperty(VsIdeTestHostContants.TestPropertyName.RestartOptions, VsIdeTestHostContants.HostRestartOptions.Both)]
-		[HostType("VS IDE")]
+		[HostType("VSTestHost")]
 		public void TestRenameOfProjectFile()
 		{
-			UIThreadInvoker.Invoke((ThreadInvoker)delegate()
+			Application.Current.Dispatcher.Invoke(delegate()
 			{
 				//Get the global service provider and the dte
-				IServiceProvider sp = VsIdeTestHostContext.ServiceProvider;
+				IServiceProvider sp = VSTestContext.ServiceProvider;
 				DTE dte = (DTE)sp.GetService(typeof(DTE));
 
 				string destination = Path.Combine(TestContext.TestDir, TestContext.TestName);
@@ -427,15 +405,13 @@ namespace Microsoft.VisualStudio.Project.IntegrationTests
 		}
 
 		[TestMethod()]
-		[TestProperty(VsIdeTestHostContants.TestPropertyName.RegistryHiveName, RegistryHiveName)]
-		[TestProperty(VsIdeTestHostContants.TestPropertyName.RestartOptions, VsIdeTestHostContants.HostRestartOptions.Both)]
-		[HostType("VS IDE")]
+		[HostType("VSTestHost")]
 		public void TestRenameOfRenamedProjectFile()
 		{
-			UIThreadInvoker.Invoke((ThreadInvoker)delegate()
+			Application.Current.Dispatcher.Invoke(delegate()
 			{
 				//Get the global service provider and the dte
-				IServiceProvider sp = VsIdeTestHostContext.ServiceProvider;
+				IServiceProvider sp = VSTestContext.ServiceProvider;
 				DTE dte = (DTE)sp.GetService(typeof(DTE));
 
 				string destination = Path.Combine(TestContext.TestDir, TestContext.TestName);
@@ -458,15 +434,13 @@ namespace Microsoft.VisualStudio.Project.IntegrationTests
 		}
 
 		[TestMethod()]
-		[TestProperty(VsIdeTestHostContants.TestPropertyName.RegistryHiveName, RegistryHiveName)]
-		[TestProperty(VsIdeTestHostContants.TestPropertyName.RestartOptions, VsIdeTestHostContants.HostRestartOptions.Both)]
-		[HostType("VS IDE")]
+		[HostType("VSTestHost")]
 		public void TestBuildEngineAndProject()
 		{
-			UIThreadInvoker.Invoke((ThreadInvoker)delegate()
+			Application.Current.Dispatcher.Invoke(delegate()
 			{
 				//Get the global service provider and the dte
-				IServiceProvider sp = VsIdeTestHostContext.ServiceProvider;
+				IServiceProvider sp = VSTestContext.ServiceProvider;
 				DTE dte = (DTE)sp.GetService(typeof(DTE));
 
 				string destination = Path.Combine(TestContext.TestDir, TestContext.TestName);
@@ -490,15 +464,13 @@ namespace Microsoft.VisualStudio.Project.IntegrationTests
 		}
 
 		[TestMethod()]
-		[TestProperty(VsIdeTestHostContants.TestPropertyName.RegistryHiveName, RegistryHiveName)]
-		[TestProperty(VsIdeTestHostContants.TestPropertyName.RestartOptions, VsIdeTestHostContants.HostRestartOptions.Both)]
-		[HostType("VS IDE")]
+		[HostType("VSTestHost")]
 		public void TestUnloadReloadOfProject()
 		{
-			UIThreadInvoker.Invoke((ThreadInvoker)delegate()
+			Application.Current.Dispatcher.Invoke(delegate()
 			{
 				//Get the global service provider and the dte
-				IServiceProvider sp = VsIdeTestHostContext.ServiceProvider;
+				IServiceProvider sp = VSTestContext.ServiceProvider;
 				DTE dte = (DTE)sp.GetService(typeof(DTE));
 
 				string destination = Path.Combine(TestContext.TestDir, TestContext.TestName);
@@ -536,15 +508,13 @@ namespace Microsoft.VisualStudio.Project.IntegrationTests
 		}
 
 		[TestMethod()]
-		[TestProperty(VsIdeTestHostContants.TestPropertyName.RegistryHiveName, RegistryHiveName)]
-		[TestProperty(VsIdeTestHostContants.TestPropertyName.RestartOptions, VsIdeTestHostContants.HostRestartOptions.Both)]
-		[HostType("VS IDE")]
+		[HostType("VSTestHost")]
 		public void TestLoadingOfProjectWithDuplicateItems()
 		{
-			UIThreadInvoker.Invoke((ThreadInvoker)delegate()
+			Application.Current.Dispatcher.Invoke(delegate()
 			{
 				//Get the global service provider and the dte
-				IServiceProvider sp = VsIdeTestHostContext.ServiceProvider;
+				IServiceProvider sp = VSTestContext.ServiceProvider;
 				DTE dte = (DTE)sp.GetService(typeof(DTE));
 
 				string destination = Path.Combine(TestContext.TestDir, TestContext.TestName);
@@ -582,15 +552,13 @@ namespace Microsoft.VisualStudio.Project.IntegrationTests
 		}
 
 		[TestMethod()]
-		[TestProperty(VsIdeTestHostContants.TestPropertyName.RegistryHiveName, RegistryHiveName)]
-		[TestProperty(VsIdeTestHostContants.TestPropertyName.RestartOptions, VsIdeTestHostContants.HostRestartOptions.Both)]
-		[HostType("VS IDE")]
+		[HostType("VSTestHost")]
 		public void TestRenameOfNestedProject()
 		{
-			UIThreadInvoker.Invoke((ThreadInvoker)delegate()
+			Application.Current.Dispatcher.Invoke(delegate()
 			{
 				//Get the global service provider and the dte
-				IServiceProvider sp = VsIdeTestHostContext.ServiceProvider;
+				IServiceProvider sp = VSTestContext.ServiceProvider;
 				DTE dte = (DTE)sp.GetService(typeof(DTE));
 
 				string destination = Path.Combine(TestContext.TestDir, TestContext.TestName);

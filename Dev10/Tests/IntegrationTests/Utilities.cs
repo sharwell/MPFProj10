@@ -17,12 +17,13 @@ using System.Globalization;
 using System.IO;
 using System.Reflection;
 using System.Text;
-using EnvDTE;
-using Microsoft.VisualStudio;
+using Microsoft.VisualStudio.Project.Automation;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Microsoft.VisualStudio.Project.Automation;
+using DTE = EnvDTE.DTE;
+using IVsExtensibility = EnvDTE.IVsExtensibility;
+using Solution = EnvDTE.Solution;
 
 namespace Microsoft.VisualStudio.Project.IntegrationTests
 {

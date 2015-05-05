@@ -13,11 +13,11 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Reflection;
 using EnvDTE;
 using Microsoft.VisualStudio.Project.Automation;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Microsoft.VSSDK.Tools.VsIdeTesting;
+using Microsoft.VisualStudioTools.VSTestHost;
+using Application = System.Windows.Application;
 using prjBuildAction = VSLangProj.prjBuildAction;
 
 namespace Microsoft.VisualStudio.Project.IntegrationTests
@@ -29,15 +29,13 @@ namespace Microsoft.VisualStudio.Project.IntegrationTests
 	public class TestNode : BaseTest
 	{
 		[TestMethod]
-		[TestProperty(VsIdeTestHostContants.TestPropertyName.RegistryHiveName, RegistryHiveName)]
-		[TestProperty(VsIdeTestHostContants.TestPropertyName.RestartOptions, VsIdeTestHostContants.HostRestartOptions.Both)]
-		[HostType("VS IDE")]
+		[HostType("VSTestHost")]
 		public void TestCreatingFileNode()
 		{
-			UIThreadInvoker.Invoke((ThreadInvoker)delegate()
+			Application.Current.Dispatcher.Invoke(delegate()
 			{
 				//Get the global service provider and the dte
-				IServiceProvider sp = VsIdeTestHostContext.ServiceProvider;
+				IServiceProvider sp = VSTestContext.ServiceProvider;
 				DTE dte = (DTE)sp.GetService(typeof(DTE));
 
 				string destination = Path.Combine(TestContext.TestDir, TestContext.TestName);
@@ -54,15 +52,13 @@ namespace Microsoft.VisualStudio.Project.IntegrationTests
 		/// Verify the NodeProperties
 		/// </summary>
 		[TestMethod]
-		[TestProperty(VsIdeTestHostContants.TestPropertyName.RegistryHiveName, RegistryHiveName)]
-		[TestProperty(VsIdeTestHostContants.TestPropertyName.RestartOptions, VsIdeTestHostContants.HostRestartOptions.Both)]
-		[HostType("VS IDE")]
+		[HostType("VSTestHost")]
 		public void TestNodeProperties()
 		{
-			UIThreadInvoker.Invoke((ThreadInvoker)delegate()
+			Application.Current.Dispatcher.Invoke(delegate()
 			{
 				//Get the global service provider and the dte
-				IServiceProvider sp = VsIdeTestHostContext.ServiceProvider;
+				IServiceProvider sp = VSTestContext.ServiceProvider;
 				DTE dte = (DTE)sp.GetService(typeof(DTE));
 
 				string destination = Path.Combine(TestContext.TestDir, TestContext.TestName);
@@ -86,15 +82,13 @@ namespace Microsoft.VisualStudio.Project.IntegrationTests
 		}
 
 		[TestMethod]
-		[TestProperty(VsIdeTestHostContants.TestPropertyName.RegistryHiveName, RegistryHiveName)]
-		[TestProperty(VsIdeTestHostContants.TestPropertyName.RestartOptions, VsIdeTestHostContants.HostRestartOptions.Both)]
-		[HostType("VS IDE")]
+		[HostType("VSTestHost")]
 		public void TestRenameOfFileNode()
 		{
-			UIThreadInvoker.Invoke((ThreadInvoker)delegate()
+			Application.Current.Dispatcher.Invoke(delegate()
 			{
 				//Get the global service provider and the dte
-				IServiceProvider sp = VsIdeTestHostContext.ServiceProvider;
+				IServiceProvider sp = VSTestContext.ServiceProvider;
 				DTE dte = (DTE)sp.GetService(typeof(DTE));
 
 				//Create a project and get the first filenode
@@ -119,15 +113,13 @@ namespace Microsoft.VisualStudio.Project.IntegrationTests
 		}
 
 		[TestMethod]
-		[TestProperty(VsIdeTestHostContants.TestPropertyName.RegistryHiveName, RegistryHiveName)]
-		[TestProperty(VsIdeTestHostContants.TestPropertyName.RestartOptions, VsIdeTestHostContants.HostRestartOptions.Both)]
-		[HostType("VS IDE")]
+		[HostType("VSTestHost")]
 		public void TestSingleFileGeneratorOnNodes()
 		{
-			UIThreadInvoker.Invoke((ThreadInvoker)delegate()
+			Application.Current.Dispatcher.Invoke(delegate()
 			{
 				//Get the global service provider and the dte
-				IServiceProvider sp = VsIdeTestHostContext.ServiceProvider;
+				IServiceProvider sp = VSTestContext.ServiceProvider;
 				DTE dte = (DTE)sp.GetService(typeof(DTE));
 
 				//Create a project and get the first filenode
@@ -157,15 +149,13 @@ namespace Microsoft.VisualStudio.Project.IntegrationTests
 		/// Verify that certain rename condition are not allowed with bad filename
 		/// </summary>
 		[TestMethod]
-		[TestProperty(VsIdeTestHostContants.TestPropertyName.RegistryHiveName, RegistryHiveName)]
-		[TestProperty(VsIdeTestHostContants.TestPropertyName.RestartOptions, VsIdeTestHostContants.HostRestartOptions.Both)]
-		[HostType("VS IDE")]
+		[HostType("VSTestHost")]
 		public void TestRenameWithBadFileName()
 		{
-			UIThreadInvoker.Invoke((ThreadInvoker)delegate()
+			Application.Current.Dispatcher.Invoke(delegate()
 			{
 				//Get the global service provider and the dte
-				IServiceProvider sp = VsIdeTestHostContext.ServiceProvider;
+				IServiceProvider sp = VSTestContext.ServiceProvider;
 				DTE dte = (DTE)sp.GetService(typeof(DTE));
 
 				string destination = Path.Combine(TestContext.TestDir, TestContext.TestName);
@@ -205,15 +195,13 @@ namespace Microsoft.VisualStudio.Project.IntegrationTests
 		/// Test SaveAs moving document into different location
 		/// </summary>
 		[TestMethod]
-		[TestProperty(VsIdeTestHostContants.TestPropertyName.RegistryHiveName, RegistryHiveName)]
-		[TestProperty(VsIdeTestHostContants.TestPropertyName.RestartOptions, VsIdeTestHostContants.HostRestartOptions.Both)]
-		[HostType("VS IDE")]
+		[HostType("VSTestHost")]
 		public void TestSaveAsDifferentLocation()
 		{
-			UIThreadInvoker.Invoke((ThreadInvoker)delegate()
+			Application.Current.Dispatcher.Invoke(delegate()
 			{
 				//Get the global service provider and the dte
-				IServiceProvider sp = VsIdeTestHostContext.ServiceProvider;
+				IServiceProvider sp = VSTestContext.ServiceProvider;
 				DTE dte = (DTE)sp.GetService(typeof(DTE));
 
 				//Create a project and get the first filenode
@@ -255,15 +243,13 @@ namespace Microsoft.VisualStudio.Project.IntegrationTests
 		/// Test SaveAs leaving document in same location
 		/// </summary>
 		[TestMethod]
-		[TestProperty(VsIdeTestHostContants.TestPropertyName.RegistryHiveName, RegistryHiveName)]
-		[TestProperty(VsIdeTestHostContants.TestPropertyName.RestartOptions, VsIdeTestHostContants.HostRestartOptions.Both)]
-		[HostType("VS IDE")]
+		[HostType("VSTestHost")]
 		public void TestSaveAsSameLocation()
 		{
-			UIThreadInvoker.Invoke((ThreadInvoker)delegate()
+			Application.Current.Dispatcher.Invoke(delegate()
 			{
 				//Get the global service provider and the dte
-				IServiceProvider sp = VsIdeTestHostContext.ServiceProvider;
+				IServiceProvider sp = VSTestContext.ServiceProvider;
 				DTE dte = (DTE)sp.GetService(typeof(DTE));
 
 				//Create a project and get the first filenode
@@ -296,15 +282,13 @@ namespace Microsoft.VisualStudio.Project.IntegrationTests
 		/// Test SaveAs - document saved in existing folder (part of the project)
 		/// </summary>
 		[TestMethod]
-		[TestProperty(VsIdeTestHostContants.TestPropertyName.RegistryHiveName, RegistryHiveName)]
-		[TestProperty(VsIdeTestHostContants.TestPropertyName.RestartOptions, VsIdeTestHostContants.HostRestartOptions.Both)]
-		[HostType("VS IDE")]
+		[HostType("VSTestHost")]
 		public void TestSaveAsInExistingSubFolder()
 		{
-			UIThreadInvoker.Invoke((ThreadInvoker)delegate()
+			Application.Current.Dispatcher.Invoke(delegate()
 			{
 				//Get the global service provider and the dte
-				IServiceProvider sp = VsIdeTestHostContext.ServiceProvider;
+				IServiceProvider sp = VSTestContext.ServiceProvider;
 				DTE dte = (DTE)sp.GetService(typeof(DTE));
 
 				//Create a project and get the first filenode
@@ -341,15 +325,13 @@ namespace Microsoft.VisualStudio.Project.IntegrationTests
 		/// Test SaveAs - document saved in new sub folder (not part of the project)
 		/// </summary>
 		[TestMethod]
-		[TestProperty(VsIdeTestHostContants.TestPropertyName.RegistryHiveName, RegistryHiveName)]
-		[TestProperty(VsIdeTestHostContants.TestPropertyName.RestartOptions, VsIdeTestHostContants.HostRestartOptions.Both)]
-		[HostType("VS IDE")]
+		[HostType("VSTestHost")]
 		public void TestSaveAsInNewDirectory()
 		{
-			UIThreadInvoker.Invoke((ThreadInvoker)delegate()
+			Application.Current.Dispatcher.Invoke(delegate()
 			{
 				//Get the global service provider and the dte
-				IServiceProvider sp = VsIdeTestHostContext.ServiceProvider;
+				IServiceProvider sp = VSTestContext.ServiceProvider;
 				DTE dte = (DTE)sp.GetService(typeof(DTE));
 
 				//Create a project and get the first filenode

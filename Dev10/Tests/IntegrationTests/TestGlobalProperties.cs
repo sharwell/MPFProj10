@@ -11,12 +11,12 @@ PURPOSE, MERCHANTABILITY, OR NON-INFRINGEMENT.
 
 using System;
 using System.IO;
-using System.Reflection;
+using System.Windows;
 using EnvDTE;
-using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Microsoft.VSSDK.Tools.VsIdeTesting;
+using Microsoft.VisualStudioTools.VSTestHost;
 using MSBuildExecution = Microsoft.Build.Execution;
+
 namespace Microsoft.VisualStudio.Project.IntegrationTests
 {
 	/// <summary>
@@ -26,14 +26,13 @@ namespace Microsoft.VisualStudio.Project.IntegrationTests
 	public class TestGlobalProperties : BaseTest
 	{
 		[TestMethod]
-		[TestProperty(VsIdeTestHostContants.TestPropertyName.RegistryHiveName, RegistryHiveName)]
-		[HostType("VS IDE")]
+		[HostType("VSTestHost")]
 		public void TestConfigChange()
 		{
-			UIThreadInvoker.Invoke((ThreadInvoker)delegate()
+			Application.Current.Dispatcher.Invoke(delegate()
 			{
 				//Get the global service provider and the dte
-				IServiceProvider sp = VsIdeTestHostContext.ServiceProvider;
+				IServiceProvider sp = VSTestContext.ServiceProvider;
 				DTE dte = (DTE)sp.GetService(typeof(DTE));
 
 				string destination = Path.Combine(TestContext.TestDir, TestContext.TestName);

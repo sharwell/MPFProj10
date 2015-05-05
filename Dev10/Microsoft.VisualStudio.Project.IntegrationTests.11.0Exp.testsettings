@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<TestSettings name="IntegrationTests" id="074D3CF1-CD30-4A7A-9FEB-CB7E6809F05E" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <Description>Settings for running integration tests in the Visual Studio 2012 Experimental Instance.</Description>
+  <Deployment>
+    <DeploymentItem filename="Samples\CSharp\NestedProject\UnitTests\Templates\TemplateClass.cs" />
+    <DeploymentItem filename="Samples\CSharp\NestedProject\UnitTests\Templates\SampleClass.cs" />
+    <DeploymentItem filename="Samples\CSharp\CustomProject\Src\Templates\Projects\MyCustomProject\Program.cs" />
+    <DeploymentItem filename="Samples\CSharp\CustomProject\Src\Templates\Projects\MyCustomProject\MyCustomProject.myproj" />
+    <DeploymentItem filename="Samples\CSharp\CustomProject\Src\Templates\Projects\MyCustomProject\MyCustomProject.ico" />
+    <DeploymentItem filename="Samples\CSharp\NestedProject\UnitTests\Templates\SampleProject.csproj" />
+    <DeploymentItem filename="Samples\CSharp\CustomProject\Src\Templates\Projects\MyCustomProject\AssemblyInfo.cs" />
+  </Deployment>
+  <Execution>
+    <TestTypeSpecific>
+      <UnitTestRunConfig testTypeId="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b">
+        <AssemblyResolution>
+          <TestDirectory useLoadContext="true" />
+        </AssemblyResolution>
+      </UnitTestRunConfig>
+    </TestTypeSpecific>
+    <AgentRule name="LocalMachineDefaultRole">
+    </AgentRule>
+  </Execution>
+  <Properties>
+    <Property name="VSApplication" value="VisualStudio"/>
+    <Property name="VSExecutable" value="devenv"/>
+    <Property name="VSVersion" value="11.0"/>
+    <Property name="VSHive" value="Exp"/>
+    <Property name="VSDebugMixedMode" value="false"/>
+  </Properties>
+</TestSettings>

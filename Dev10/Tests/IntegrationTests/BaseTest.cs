@@ -9,40 +9,16 @@ PURPOSE, MERCHANTABILITY, OR NON-INFRINGEMENT.
 
 ***************************************************************************/
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Reflection;
-using System.Runtime.InteropServices;
-using EnvDTE;
-using Microsoft.VisualStudio;
-using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Microsoft.VSSDK.Tools.VsIdeTesting;
-using Microsoft.VisualStudio.Project.Automation;
-using MSBuild = Microsoft.Build.Evaluation;
+using Microsoft.VisualStudioTools.VSTestHost;
 
 namespace Microsoft.VisualStudio.Project.IntegrationTests
 {
     [TestClass]
     public abstract class BaseTest
     {
-#if TEST_IN_VS2010
-        protected const string RegistryHiveName = "10.0Exp";
-#elif TEST_IN_VS2012
-        protected const string RegistryHiveName = "11.0Exp";
-#elif TEST_IN_VS2013
-        protected const string RegistryHiveName = "12.0Exp";
-#elif TEST_IN_VS2015
-        protected const string RegistryHiveName = "14.0Exp";
-#endif
-
         private TestContext testContextInstance;
-
-        protected delegate void ThreadInvoker();
 
         /// <summary>
         ///Gets or sets the test context which provides
@@ -63,14 +39,12 @@ namespace Microsoft.VisualStudio.Project.IntegrationTests
         [TestInitialize()]
         public virtual void Initialize()
         {
-            UIThreadInvoker.Initialize();
-            //UIThread.InitUnitTestingMode();
         }
 
         [TestCleanup()]
         public void MyTestCleanup()
         {
-            IVsSolution solutionService = VsIdeTestHostContext.ServiceProvider.GetService(typeof(IVsSolution)) as IVsSolution;
+            IVsSolution solutionService = VSTestContext.ServiceProvider.GetService(typeof(SVsSolution)) as IVsSolution;
             if (solutionService != null)
             {
                 object isOpen;

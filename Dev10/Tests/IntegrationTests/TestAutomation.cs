@@ -13,14 +13,14 @@ using System;
 using System.Collections;
 using System.IO;
 using System.Reflection;
+using System.Windows;
 using EnvDTE;
-using Microsoft.VisualStudio;
+using Microsoft.VisualStudio.Project.Automation;
+using Microsoft.VisualStudio.Project.Samples.NestedProject;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Microsoft.VSSDK.Tools.VsIdeTesting;
-using Microsoft.VisualStudio.Project.Automation;
-using Microsoft.VisualStudio.Project.Samples.NestedProject;
+using Microsoft.VisualStudioTools.VSTestHost;
 
 namespace Microsoft.VisualStudio.Project.IntegrationTests
 {
@@ -35,14 +35,13 @@ namespace Microsoft.VisualStudio.Project.IntegrationTests
 		/// Tests the interface methods on ENVDTE.Property
 		/// </summary>
 		[TestMethod]
-		[TestProperty(VsIdeTestHostContants.TestPropertyName.RegistryHiveName, RegistryHiveName)]
-		[HostType("VS IDE")]
+		[HostType("VSTestHost")]
 		public void TestAutomationOnProject()
 		{
-			UIThreadInvoker.Invoke((ThreadInvoker)delegate()
+			Application.Current.Dispatcher.Invoke(delegate()
 			{
 				//Get the global service provider and the dte
-				IServiceProvider sp = VsIdeTestHostContext.ServiceProvider;
+				IServiceProvider sp = VSTestContext.ServiceProvider;
 				DTE dte = (DTE)sp.GetService(typeof(DTE));
 
 				string destination = Path.Combine(TestContext.TestDir, TestContext.TestName);
@@ -83,14 +82,13 @@ namespace Microsoft.VisualStudio.Project.IntegrationTests
 		/// Tests on the EnvDTE.ProjectItem implementation.
 		/// </summary>
 		[TestMethod]
-		[TestProperty(VsIdeTestHostContants.TestPropertyName.RegistryHiveName, RegistryHiveName)]
-		[HostType("VS IDE")]
+		[HostType("VSTestHost")]
 		public void TestAutomationOnProjectItem()
 		{
-			UIThreadInvoker.Invoke((ThreadInvoker)delegate()
+			Application.Current.Dispatcher.Invoke(delegate()
 			{
 				//Get the global service provider and the dte
-				IServiceProvider sp = VsIdeTestHostContext.ServiceProvider;
+				IServiceProvider sp = VSTestContext.ServiceProvider;
 				DTE dte = (DTE)sp.GetService(typeof(DTE));
 
 				string destination = Path.Combine(TestContext.TestDir, TestContext.TestName);
@@ -171,14 +169,13 @@ namespace Microsoft.VisualStudio.Project.IntegrationTests
 		}
 
 		[TestMethod]
-		[TestProperty(VsIdeTestHostContants.TestPropertyName.RegistryHiveName, RegistryHiveName)]
-		[HostType("VS IDE")]
+		[HostType("VSTestHost")]
 		public void TestAutomationOnProjectItems()
 		{
-			UIThreadInvoker.Invoke((ThreadInvoker)delegate()
+			Application.Current.Dispatcher.Invoke(delegate()
 			{
 				//Get the global service provider and the dte
-				IServiceProvider sp = VsIdeTestHostContext.ServiceProvider;
+				IServiceProvider sp = VSTestContext.ServiceProvider;
 				DTE dte = (DTE)sp.GetService(typeof(DTE));
 
 				string destination = Path.Combine(TestContext.TestDir, TestContext.TestName);
@@ -260,14 +257,13 @@ namespace Microsoft.VisualStudio.Project.IntegrationTests
 		/// Tests on the EnvDTE.ProjectItem implementation.
 		/// </summary>
 		[TestMethod]
-		[TestProperty(VsIdeTestHostContants.TestPropertyName.RegistryHiveName, RegistryHiveName)]
-		[HostType("VS IDE")]
+		[HostType("VSTestHost")]
 		public void TestMoreAutomationOnProjectItems()
 		{
-			UIThreadInvoker.Invoke((ThreadInvoker)delegate()
+			Application.Current.Dispatcher.Invoke(delegate()
 			{
 				//Get the global service provider and the dte
-				IServiceProvider sp = VsIdeTestHostContext.ServiceProvider;
+				IServiceProvider sp = VSTestContext.ServiceProvider;
 				DTE dte = (DTE)sp.GetService(typeof(DTE));
 
 				string destination = Path.Combine(TestContext.TestDir, TestContext.TestName);
@@ -291,14 +287,13 @@ namespace Microsoft.VisualStudio.Project.IntegrationTests
 
 		#region test configuration independent Project Properties
 		[TestMethod]
-		[TestProperty(VsIdeTestHostContants.TestPropertyName.RegistryHiveName, RegistryHiveName)]
-		[HostType("VS IDE")]
+		[HostType("VSTestHost")]
 		public void TestAutomationOnProjectProperties()
 		{
-			UIThreadInvoker.Invoke((ThreadInvoker)delegate()
+			Application.Current.Dispatcher.Invoke(delegate()
 			{
 				//Get the global service provider and the dte
-				IServiceProvider sp = VsIdeTestHostContext.ServiceProvider;
+				IServiceProvider sp = VSTestContext.ServiceProvider;
 				DTE dte = (DTE)sp.GetService(typeof(DTE));
 
 				string destination = Path.Combine(TestContext.TestDir, TestContext.TestName);
@@ -325,14 +320,13 @@ namespace Microsoft.VisualStudio.Project.IntegrationTests
 		/// Tests the interface methods on ENVDTE.Property
 		/// </summary>
 		[TestMethod]
-		[TestProperty(VsIdeTestHostContants.TestPropertyName.RegistryHiveName, RegistryHiveName)]
-		[HostType("VS IDE")]
+		[HostType("VSTestHost")]
 		public void TestInterfaceMethodsOnProperty()
 		{
-			UIThreadInvoker.Invoke((ThreadInvoker)delegate()
+			Application.Current.Dispatcher.Invoke(delegate()
 			{
 				//Get the global service provider and the dte
-				IServiceProvider sp = VsIdeTestHostContext.ServiceProvider;
+				IServiceProvider sp = VSTestContext.ServiceProvider;
 				DTE dte = (DTE)sp.GetService(typeof(DTE));
 
 				string destination = Path.Combine(TestContext.TestDir, TestContext.TestName);
@@ -427,14 +421,13 @@ namespace Microsoft.VisualStudio.Project.IntegrationTests
 
 		#region test Project Item Properties for hierarchy nodes of type FileNode
 		[TestMethod]
-		[TestProperty(VsIdeTestHostContants.TestPropertyName.RegistryHiveName, RegistryHiveName)]
-		[HostType("VS IDE")]
+		[HostType("VSTestHost")]
 		public void TestFileNodeRelatedItemProperties()
 		{
-			UIThreadInvoker.Invoke((ThreadInvoker)delegate()
+			Application.Current.Dispatcher.Invoke(delegate()
 			{
 				//Get the global service provider and the dte
-				IServiceProvider sp = VsIdeTestHostContext.ServiceProvider;
+				IServiceProvider sp = VSTestContext.ServiceProvider;
 				DTE dte = (DTE)sp.GetService(typeof(DTE));
 
 				string destination = Path.Combine(TestContext.TestDir, TestContext.TestName);
@@ -459,14 +452,13 @@ namespace Microsoft.VisualStudio.Project.IntegrationTests
 
 		#region test Project Item Properties for hierarchy nodes of type ReferenceNode
 		[TestMethod]
-		[TestProperty(VsIdeTestHostContants.TestPropertyName.RegistryHiveName, RegistryHiveName)]
-		[HostType("VS IDE")]
+		[HostType("VSTestHost")]
 		public void TestReferenceNodeRelatedItemProperties()
 		{
-			UIThreadInvoker.Invoke((ThreadInvoker)delegate()
+			Application.Current.Dispatcher.Invoke(delegate()
 			{
 				//Get the global service provider and the dte
-				IServiceProvider sp = VsIdeTestHostContext.ServiceProvider;
+				IServiceProvider sp = VSTestContext.ServiceProvider;
 				DTE dte = (DTE)sp.GetService(typeof(DTE));
 
 				string destination = Path.Combine(TestContext.TestDir, TestContext.TestName);
@@ -491,14 +483,13 @@ namespace Microsoft.VisualStudio.Project.IntegrationTests
 
 		#region test Project Item Properties for hierarchy nodes of type FolderNode
 		[TestMethod]
-		[TestProperty(VsIdeTestHostContants.TestPropertyName.RegistryHiveName, RegistryHiveName)]
-		[HostType("VS IDE")]
+		[HostType("VSTestHost")]
 		public void TestFolderNodeRelatedProjectItemProperties()
 		{
-			UIThreadInvoker.Invoke((ThreadInvoker)delegate()
+			Application.Current.Dispatcher.Invoke(delegate()
 			{
 				//Get the global service provider and the dte
-				IServiceProvider sp = VsIdeTestHostContext.ServiceProvider;
+				IServiceProvider sp = VSTestContext.ServiceProvider;
 				DTE dte = (DTE)sp.GetService(typeof(DTE));
 
 				string destination = Path.Combine(TestContext.TestDir, TestContext.TestName);
@@ -529,16 +520,15 @@ namespace Microsoft.VisualStudio.Project.IntegrationTests
 
 		#region test Configuration dependent properties for ProjectNode object
 		[TestMethod]
-		[TestProperty(VsIdeTestHostContants.TestPropertyName.RegistryHiveName, RegistryHiveName)]
-		[HostType("VS IDE")]
+		[HostType("VSTestHost")]
 		public void TestAutomationOnConfigDependentProperties()
 		{
 			const int expectedConfigs = 2;
 
-			UIThreadInvoker.Invoke((ThreadInvoker)delegate()
+			Application.Current.Dispatcher.Invoke(delegate()
 			{
 				//Get the global service provider and the dte
-				IServiceProvider sp = VsIdeTestHostContext.ServiceProvider;
+				IServiceProvider sp = VSTestContext.ServiceProvider;
 				DTE dte = (DTE)sp.GetService(typeof(DTE));
 
 				string destination = Path.Combine(TestContext.TestDir, TestContext.TestName);
