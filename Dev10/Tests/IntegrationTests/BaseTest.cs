@@ -9,9 +9,12 @@ PURPOSE, MERCHANTABILITY, OR NON-INFRINGEMENT.
 
 ***************************************************************************/
 
+using System;
 using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Microsoft.VisualStudioTools.VSTestHost;
+using Thread = System.Threading.Thread;
+using vsBuildState = EnvDTE.vsBuildState;
 
 namespace Microsoft.VisualStudio.Project.IntegrationTests
 {
@@ -44,14 +47,19 @@ namespace Microsoft.VisualStudio.Project.IntegrationTests
         [TestCleanup()]
         public void MyTestCleanup()
         {
+            while (VSTestContext.DTE.Solution.SolutionBuild.BuildState == vsBuildState.vsBuildStateInProgress)
+            {
+                Thread.Sleep(1000);
+            }
+
             IVsSolution solutionService = VSTestContext.ServiceProvider.GetService(typeof(SVsSolution)) as IVsSolution;
             if (solutionService != null)
             {
                 object isOpen;
-                solutionService.GetProperty((int)__VSPROPID.VSPROPID_IsSolutionOpen, out isOpen);
-                if ((bool)isOpen)
+                ErrorHandler.ThrowOnFailure(solutionService.GetProperty((int)__VSPROPID.VSPROPID_IsSolutionOpen, out isOpen));
+                if (Convert.ToBoolean(isOpen))
                 {
-                    solutionService.CloseSolutionElement((uint)__VSSLNSAVEOPTIONS.SLNSAVEOPT_ForceSave, null, 0);
+                    ErrorHandler.ThrowOnFailure(solutionService.CloseSolutionElement((uint)__VSSLNSAVEOPTIONS.SLNSAVEOPT_ForceSave, null, 0));
                 }
             }
         }
